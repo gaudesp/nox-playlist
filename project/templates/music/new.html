@@ -1,0 +1,20 @@
+{% extends "layout/application.html" %}
+
+{% block title %}Ajouter une musique{% endblock %}
+
+{% block body %}
+  <div class="card">
+    <div class="card-header"><i class="fas fa-plus"></i> Ajouter une musique</div>
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('music_new') }}">
+        <div class="form-group">
+          <label for="link"><i class="fas fa-play-circle"></i> Lien YouTube</label>
+          <input type="text" class="form-control" name="link" id="link" placeholder="Insérer le lien YouTube de la musique" value="{{ request.form['link'] }}" required>
+        </div>
+        <button type="submit" class="btn btn-success" id="add">
+          <i class="fas fa-check"></i> Valider
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

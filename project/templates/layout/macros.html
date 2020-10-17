@@ -1,0 +1,60 @@
+{% macro alert(message, type) %}
+  <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message }}
+  </div>
+{% endmacro %}
+
+{% macro pagination(items_list, item_url) %}
+    <nav>
+      <ul class="pagination justify-content-center">
+        {% if items_list.has_prev %}
+        <li class="page-item" title="Précédent">
+            <a class="page-link" href="{{ url_for(item_url, page=items_list.prev_num) }}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled" title="Précédent">
+          <span class="page-link">
+            <span aria-hidden="true">&laquo;</span>
+        </span>
+        </li>
+        {% endif %}
+
+        {% for page_num in items_list.iter_pages() %}
+            {% if page_num %}
+                {% if page_num != items_list.page %}
+                    <li class="page-item" title="Page {{ page_num }}">
+                        <a class="page-link" href="{{ url_for(item_url, page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item active" title="Page {{ page_num }}">
+                        <span class="page-link">
+                            {{ page_num }}
+                        </span>
+                    </li>
+                {% endif %}
+           {% else %}
+               <li class="page-item" title="...">
+                   <span class="page-link" style="white-space; nowrap; overflow: hidden; text-overflow: ellipsis">…</span>
+               </li>
+           {% endif %}
+        {% endfor %}
+
+        {% if items_list.has_next %}
+        <li class="page-item" title="Suivant">
+            <a class="page-link" href="{{ url_for(item_url, page=items_list.next_num) }}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled" title="Suivant">
+          <span class="page-link">
+            <span aria-hidden="true">&raquo;</span>
+        </span>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+{% endmacro %}

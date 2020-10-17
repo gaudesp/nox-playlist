@@ -1,0 +1,26 @@
+{% extends "layout/application.html" %}
+{% from 'layout/macros.html' import pagination %}
+
+{% block title %}Liste des musiques{% endblock %}
+
+{% block body %}
+  {% if nb > 0 %}
+  <div class="card">
+    <div class="card-header"><i class="fas fa-music"></i> Liste des musiques</div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        {% for music in musics %}
+          <a class="list-group-item" href="{{ url_for('music_show', slug=music.slug) }}">{{ music.title }}</a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="mt-4">
+    {{ pagination(paginate, 'music_index') }}
+  </div>
+  {% else %}
+    <div class="alert alert-info">
+       Aucune musique n'a été ajoutée.
+    </div><br />
+  {% endif %}
+{% endblock %}
